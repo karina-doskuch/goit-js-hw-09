@@ -22,7 +22,8 @@ const options = {
   },
 };
 
-flatpickr('input#datetime-picker', options);
+const dateTimePickerRef = document.querySelector('input#datetime-picker');
+flatpickr(dateTimePickerRef, options);
 
 function selectDate(selectedDate) {
   const currentDate = new Date();
@@ -35,9 +36,11 @@ function selectDate(selectedDate) {
   }
 }
 
-startBtnRef.addEventListener('click', () =>
-  setInterval(() => updateTimer(), 1000)
-);
+startBtnRef.addEventListener('click', () => {
+  dateTimePickerRef.disabled = true;
+  startBtnRef.disabled = true;
+  setInterval(() => updateTimer(), 1000);
+});
 
 function updateTimer() {
   const currentDateMs = new Date().getTime();
