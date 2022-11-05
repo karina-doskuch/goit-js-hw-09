@@ -11,6 +11,7 @@ const minutesValueRef = document.querySelector('span[data-minutes]');
 const secondsValueRef = document.querySelector('span[data-seconds]');
 
 let selectedDateMs;
+let intervlID;
 
 const options = {
   enableTime: true,
@@ -39,12 +40,17 @@ function selectDate(selectedDate) {
 startBtnRef.addEventListener('click', () => {
   dateTimePickerRef.disabled = true;
   startBtnRef.disabled = true;
-  setInterval(() => updateTimer(), 1000);
+  intervlID = setInterval(() => updateTimer(), 1000);
 });
 
 function updateTimer() {
   const currentDateMs = new Date().getTime();
   const remainMs = selectedDateMs - currentDateMs;
+  if(remainMs < 0)   {
+    clearInterval(intervlID);
+    return;
+  }
+
   const remainingDate = convertMs(remainMs);
 
   daysValueRef.innerHTML = addLeadingZero(remainingDate.days);
